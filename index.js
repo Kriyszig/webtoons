@@ -98,4 +98,4 @@ async function run(title, episode) {
   await browser.close();
 }
 
-run(95, 2);
+module.exports = run;
