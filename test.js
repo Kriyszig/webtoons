@@ -1,4 +1,5 @@
 const webtoons = require('./index');
 
-webtoons(95,3,true);
-webtoons.batchDownload(95, 3, 5);
+webtoons.webtoons(95,3,true);
+webtoons.webtoons(95, 10)
+webtoons.batchDownload(95, 8, 10);
