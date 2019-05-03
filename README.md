@@ -23,4 +23,6 @@ Once inside the directory, you will notice a file names `test.js`. Open the file
 node test.js
 ```
 
+<b>Note</b>: The render time for page may vary from system to system. If the page doesn't complete render within the set timeout, please change the values to your liking for perfection and to get complete result.
+
 Once the execution fiishes, you will have your favourite webtoon in `./webtoons` directory under a seperate directory under the title of the weboo you wante to download.
