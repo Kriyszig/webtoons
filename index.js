@@ -1,7 +1,10 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
-async function webtoons(page, title, episode, progress = false) {
+async function webtoons(page, title, episode, progress = false, time = null) {
+  if(time == null){
+    time = 1500;
+  }
   /*
    * As mentioned above, the URL changes dynamically.
    * Splitting the URL at every "/" and comapring with the URL above, we see the new URL will
@@ -66,7 +69,7 @@ async function webtoons(page, title, episode, progress = false) {
         document.documentElement.scrollBy(0, 10000);
       });
     }
-    await page.waitFor(1500); // Awaiting render after scrolldown action
+    await page.waitFor(time); // Awaiting render after scrolldown action
     await page.screenshot({
       path: `./webtoons/${name}/ep${episode}/p${Math.floor(i / 10000) + 1}.jpg`,
       type: 'jpeg'
@@ -84,7 +87,15 @@ async function webtoons(page, title, episode, progress = false) {
   }
 }
 
-async function download(webtoonID, start, end, progress = false) {
+async function download(webtoonID, start, end, progress = false, time = null) {
+  if(time == null){
+    time = [2000,1500];
+  }
+  if(Array.isArray(time)){
+    if(time.length != 2){
+      time = [2000, time[0]];
+    }
+  }
   /*
      * Starting a headleess session of chromium with Puppeteer
      * Note: Alter {headless: true} to {headless: flase} to see automated operations in action
@@ -113,8 +124,8 @@ async function download(webtoonID, start, end, progress = false) {
     await page.goto(
       `https://www.webtoons.com/en/fantasy/tower-of-god/season-1-ep-0/viewer?title_no=${
       webtoonID}&episode_no=${i}`);
-    await page.waitFor(2000); // Allowing time to complete render
-    await webtoons(page, webtoonID, i, progress);
+    await page.waitFor(time[1]); // Allowing time to complete render
+    await webtoons(page, webtoonID, i, progress, time[0]);
   }
 
   // Closing page and the chromium session
@@ -125,8 +136,8 @@ async function download(webtoonID, start, end, progress = false) {
   }
 }
 
-async function downloadSingle(webtoonID, episode, progress) {
-  await download(webtoonID, episode, episode, progress);
+async function downloadSingle(webtoonID, episode, progress = false, time = null) {
+  await download(webtoonID, episode, episode, progress, time);
 }
 
 module.exports.webtoons = downloadSingle;
