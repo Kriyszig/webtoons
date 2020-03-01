@@ -40,3 +40,5 @@ node test.js
 ```
 
 Once the execution fiishes, you will have your favourite webtoon in `./webtoons` directory under a seperate directory under the title of the weboo you wante to download.
+
+### Major Updates Coming Soon
